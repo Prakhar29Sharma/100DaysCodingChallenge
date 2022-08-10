@@ -10,7 +10,7 @@ public class Palindrome {
 
 		// Input
 		n = input.nextInt();
-		num = n;
+		//num = n;
 
 		/* while loop starts here */
 		while(n > 0) {
