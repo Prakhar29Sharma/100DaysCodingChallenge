@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<stdlib.h>
 
 struct node {
     int data;
@@ -41,6 +42,38 @@ void insertEnd(int n) {
     }
 }
 
+void insertAt(int n, int pos) {
+    if(list == NULL) {
+        printf("List is Empty!\n");
+    } else {
+        if(pos == 1) {
+            insertBeg(n);
+            return;
+        }
+        int count = 0;
+        struct node *nn = getnode();
+        nn->data = n;
+        struct node *prev = NULL;
+        struct node *temp = list;
+        while(temp->next!=NULL) {
+            prev = temp;
+            temp = temp->next;
+            count++;
+            if(count == pos-1) {
+                // pointer manipulation
+                prev->next = nn;
+                nn->prev = prev;
+                nn->next = temp;
+                temp->prev = nn;
+                break;
+            }
+        }
+        if(count < pos-1) {
+            printf("there're lesse number of elements in the list!\n");
+        }
+    }
+}
+
 void display() {
     if(list == NULL) {
         printf("List is Empty!\n");
@@ -57,11 +90,45 @@ void display() {
 // Driver Code
 int main()
 {
-    insertBeg(4);
-    insertBeg(5);
-    insertEnd(6);
-    insertEnd(10);
-    insertBeg(23);
-    display();
+    int ch, n, pos;
+    
+    while(1) {
+        printf("---Doubly Linked List Menu---\n");
+        printf("1. Insert at beginning\n");
+        printf("2. Insert at end\n");
+        printf("3. Insert at location\n");
+        printf("4. Display\n");
+        printf("5. Exit\n");
+        printf("Enter your choice : ");
+        scanf("%d", &ch);
+        switch(ch) {
+            case 1:
+                printf("Enter a number : ");
+                scanf("%d",&n);
+                insertBeg(n);
+                break;
+            case 2:
+                printf("Enter a number : ");
+                scanf("%d",&n);
+                insertEnd(n);
+                break;
+            case 3:
+                printf("Enter a number : ");
+                scanf("%d",&n);
+                printf("Enter a position to insert element at : ");
+                scanf("%d", &pos);
+                insertAt(n, pos);
+                break;
+            case 4:
+                display();
+                break;
+            case 5:
+                exit(0);
+                break;
+            default:
+                printf("Invalid Choice! Try Again!\n");
+        }
+    }
+
     return 0;
 }
