@@ -74,6 +74,48 @@ void insertAt(int n, int pos) {
     }
 }
 
+void deleteBeg() {
+    if(list == NULL) {
+        printf("List is Empty!\n");
+    } else {
+        struct node *temp = list;
+        list = list->next;
+        free(temp);
+    }
+}
+
+void deleteEnd() {
+    if(list == NULL) {
+        printf("List is Empty!\n");
+    } else {
+        struct node *temp = list;
+        while(temp->next != NULL) {
+            temp = temp->next;
+        }
+        (temp->prev)->next = NULL;
+        //free(temp);
+    }
+}
+
+void deleteAt(int pos) {
+    if(pos == 1) {
+        deleteBeg();
+    } else {
+        int count = 1;
+        struct node *temp = list;
+        while(temp->next != NULL) {
+            if(count == pos-1) {
+                (temp->prev)->next = temp->next;
+                free(temp);
+                return;
+            }
+        }
+        if(count > pos-1) {
+            printf("There're less number of elements\n");
+        }
+    }
+}
+
 void display() {
     if(list == NULL) {
         printf("List is Empty!\n");
@@ -98,7 +140,10 @@ int main()
         printf("2. Insert at end\n");
         printf("3. Insert at location\n");
         printf("4. Display\n");
-        printf("5. Exit\n");
+        printf("5. Delete at beginning\n");
+        printf("6. Delete at end\n");
+        printf("7. Delete at position\n");
+        printf("8. Exit\n");
         printf("Enter your choice : ");
         scanf("%d", &ch);
         switch(ch) {
@@ -123,6 +168,17 @@ int main()
                 display();
                 break;
             case 5:
+                deleteBeg();
+                break;
+            case 6:
+                deleteEnd();
+                break;
+            case 7:
+                printf("Enter a position to delete element at : ");
+                scanf("%d", &pos);
+                deleteAt(pos);
+                break;
+            case 8:
                 exit(0);
                 break;
             default:
